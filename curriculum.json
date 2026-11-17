@@ -1,0 +1,17 @@
+{
+  "topic": "Renal autoregulation and prerenal acute kidney injury → acute tubular necrosis",
+  "topic_es": "Autorregulación renal y fracaso renal agudo prerrenal → necrosis tubular aguda",
+  "system": "Renal",
+  "specialty": "Nephrology",
+  "eciModule": [
+    "I · Morfología, estructura y función del cuerpo humano",
+    "III · Formación clínica humana",
+    "IV · Procedimientos diagnósticos y terapéuticos"
+  ],
+  "typicalSubjects": ["Fisiología", "Fisiopatología", "Farmacología", "Patología médica", "Nefrología", "Medicina intensiva / Urgencias"],
+  "mirRelevant": true,
+  "keywords_es": ["autorregulación renal", "prostaglandinas", "angiotensina II", "AINE", "IECA", "ARA II", "fracaso renal agudo", "azotemia prerrenal", "necrosis tubular aguda", "EFNa", "índice de fracaso renal", "KDIGO", "oliguria", "creatinina"],
+  "keywords_en": ["renal autoregulation", "prostaglandins", "angiotensin II", "NSAID", "ACE inhibitor", "ARB", "triple whammy", "acute kidney injury", "prerenal azotaemia", "acute tubular necrosis", "FENa", "renal failure index", "KDIGO", "oliguria", "creatinine kinetics"],
+  "languages": ["es", "en"],
+  "presets": ["healthy", "tripleWhammy", "briefShock", "prolongedShock", "icuTarget65"]
+}

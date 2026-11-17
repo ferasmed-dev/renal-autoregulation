@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autorregulación renal y fracaso renal agudo · simulador docente</title>
+<meta name="description" content="Simulador interactivo de la autorregulación renal: prostaglandinas y angiotensina II, efecto de AINE e IECA/ARA II, azotemia prerrenal, necrosis tubular aguda e índices urinarios.">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M20 4c6 0 9 6 8 13s-6 11-11 11-7-4-5-8 1-6-2-8-1-8 10-8z' fill='none' stroke='%23c0392b' stroke-width='2.5'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1 data-i18n="h1"></h1>
+    <p class="sub" data-i18n="sub"></p>
+  </div>
+  <div class="top-right">
+    <div class="lang" role="group" data-i18n-aria="lang.switch">
+      <button type="button" class="btn small" data-lang="es" lang="es">ES</button>
+      <button type="button" class="btn small" data-lang="en" lang="en">EN</button>
+    </div>
+    <div class="legend-tags"><span class="tag tag-model" data-i18n="tag.model"></span> <span data-i18n="legend.model"></span></div>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- ============ CONTROLS ============ -->
+  <section class="card controls" aria-labelledby="h-controls">
+    <h2 id="h-controls" data-i18n="controls"></h2>
+    <div class="transport">
+      <button id="btn-play" class="btn primary" type="button" aria-pressed="false"></button>
+      <button id="btn-reset" class="btn" type="button" data-i18n="reset"></button>
+      <span id="clock" class="clock" aria-live="polite"></span>
+    </div>
+
+    <fieldset class="presets">
+      <legend data-i18n="scenarios"></legend>
+      <div class="preset-row" id="presets"></div>
+      <p id="preset-expect" class="hint"></p>
+      <button id="btn-link" class="btn small" type="button" hidden></button>
+    </fieldset>
+
+    <div class="slider">
+      <label for="s-map"><span data-i18n="s.map"></span> <output id="o-map"></output></label>
+      <input id="s-map" type="range" min="40" max="150" step="1">
+      <p class="hint" data-i18n="s.map.hint"></p>
+    </div>
+    <div class="slider">
+      <label for="s-vol"><span data-i18n="s.vol"></span> <output id="o-vol"></output></label>
+      <input id="s-vol" type="range" min="0.5" max="1" step="0.01">
+      <p class="hint" data-i18n="s.vol.hint"></p>
+    </div>
+    <div class="slider">
+      <label for="s-speed"><span data-i18n="s.speed"></span> <output id="o-speed"></output></label>
+      <input id="s-speed" type="range" min="1" max="48" step="1">
+    </div>
+
+    <fieldset class="toggles">
+      <legend data-i18n="drugs"></legend>
+      <label class="switch"><input id="t-nsaid" type="checkbox"><span><span data-i18n="t.nsaid"></span> <small data-i18n="t.nsaid.small"></small></span></label>
+      <label class="switch"><input id="t-acei" type="checkbox"><span><span data-i18n="t.acei"></span> <small data-i18n="t.acei.small"></small></span></label>
+      <label class="switch"><input id="t-diuretic" type="checkbox"><span><span data-i18n="t.diur"></span> <small data-i18n="t.diur.small"></small></span></label>
+      <label class="switch subtle"><input id="t-cf" type="checkbox" checked><span data-i18n="t.cf"></span></label>
+    </fieldset>
+
+    <details class="advanced">
+      <summary><span data-i18n="advanced"></span> <span class="tag tag-model" data-i18n="tag.model"></span></summary>
+      <div class="slider">
+        <label for="a-isch"><span data-i18n="a.isch"></span> <output id="o-isch"></output></label>
+        <input id="a-isch" type="range" min="0.3" max="0.9" step="0.01">
+      </div>
+      <div class="slider">
+        <label for="a-kinj"><span data-i18n="a.kinj"></span> <output id="o-kinj"></output></label>
+        <input id="a-kinj" type="range" min="0" max="0.2" step="0.005">
+      </div>
+      <div class="slider">
+        <label for="a-repair"><span data-i18n="a.repair"></span> <output id="o-repair"></output></label>
+        <input id="a-repair" type="range" min="24" max="240" step="6">
+      </div>
+      <div class="slider">
+        <label for="a-pg"><span data-i18n="a.pg"></span> <output id="o-pg"></output></label>
+        <input id="a-pg" type="range" min="0" max="1" step="0.02">
+      </div>
+      <div class="slider">
+        <label for="a-ang"><span data-i18n="a.ang"></span> <output id="o-ang"></output></label>
+        <input id="a-ang" type="range" min="0" max="1" step="0.01">
+      </div>
+      <div class="slider">
+        <label for="a-weight"><span data-i18n="a.weight"></span> <output id="o-weight"></output></label>
+        <input id="a-weight" type="range" min="40" max="120" step="1">
+      </div>
+      <div class="slider">
+        <label for="a-cr0"><span data-i18n="a.cr0"></span> <output id="o-cr0"></output></label>
+        <input id="a-cr0" type="range" min="0.5" max="2" step="0.05">
+      </div>
+      <div class="slider">
+        <label for="a-horizon"><span data-i18n="a.horizon"></span> <output id="o-horizon"></output></label>
+        <input id="a-horizon" type="range" min="3" max="30" step="1">
+      </div>
+      <button id="btn-defaults" class="btn small" type="button" data-i18n="defaults"></button>
+    </details>
+  </section>
+
+  <!-- ============ SCHEMATIC ============ -->
+  <section class="card schematic" aria-labelledby="h-schem">
+    <h2 id="h-schem" data-i18n="schem"></h2>
+    <div id="glomerulus" class="glom-host"></div>
+    <div class="status">
+      <span id="phase-badge" class="phase-badge"></span>
+      <div class="meter"><span data-i18n="g.o2"></span><div class="meter-track"><div id="m-o2" class="meter-fill o2"></div></div><b id="m-o2-v"></b></div>
+      <div class="meter"><span data-i18n="g.injury"></span><div class="meter-track"><div id="m-inj" class="meter-fill inj"></div></div><b id="m-inj-v"></b></div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S HAPPENING ============ -->
+  <section class="card explain" aria-labelledby="h-exp">
+    <h2 id="h-exp" data-i18n="explain"></h2>
+    <ol id="cycle" class="cycle"></ol>
+    <div id="treat-note" class="treat-note" hidden></div>
+    <h3 data-i18n="log"></h3>
+    <ul id="log" class="log" aria-live="polite"></ul>
+  </section>
+
+  <!-- ============ TILES + INDICES ============ -->
+  <section class="card stats">
+    <div class="tiles" id="tiles"></div>
+  </section>
+  <section class="card indices" aria-labelledby="h-ix">
+    <h2 id="h-ix" data-i18n="indices"></h2>
+    <div id="ix-table"></div>
+    <p id="ix-diuretic" class="warn-note" data-i18n="ix.diuretic" hidden></p>
+    <p class="hint" data-i18n="ix.formula"></p>
+  </section>
+
+  <!-- ============ CHARTS ============ -->
+  <section class="card charts" aria-labelledby="h-charts">
+    <h2 id="h-charts" data-i18n="charts"></h2>
+    <div class="chart-legend" id="cf-legend"><span><i></i><span data-i18n="legend.current"></span></span><span><i class="cf"></i><span data-i18n="legend.cf"></span></span></div>
+    <div class="chart-grid">
+      <div class="curve-host">
+        <div id="c-curve"></div>
+        <div class="chart-legend"><span><i class="gfr"></i><span data-i18n="curve.gfr"></span></span><span><i class="rbf"></i><span data-i18n="curve.rbf"></span></span></div>
+      </div>
+      <div id="c-map"></div>
+      <div id="c-gfr"></div>
+      <div id="c-cr"></div>
+      <div id="c-uo"></div>
+      <div id="c-fena"></div>
+      <div id="c-inj"></div>
+    </div>
+    <details class="table-view">
+      <summary data-i18n="table"></summary>
+      <div id="data-table"></div>
+    </details>
+  </section>
+
+  <!-- ============ REFERENCE VALUES ============ -->
+  <section class="card normals" aria-labelledby="h-norm">
+    <h2 id="h-norm" data-i18n="normals"></h2>
+    <ul id="normals-list"></ul>
+    <p class="hint" data-i18n="normals.model"></p>
+  </section>
+</main>
+
+<footer class="foot" data-i18n="footer"></footer>
+
+<script type="module" src="src/ui.js"></script>
+</body>
+</html>

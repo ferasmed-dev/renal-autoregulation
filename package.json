@@ -1,0 +1,12 @@
+{
+  "name": "renal-autoregulation",
+  "version": "1.0.0",
+  "description": "Interactive teaching simulator of renal autoregulation, NSAIDs/ACE inhibitors and the prerenal → acute tubular necrosis continuum (no build step).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8000"
+  },
+  "license": "MIT"
+}
